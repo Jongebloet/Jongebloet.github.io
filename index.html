@@ -1,1 +1,75 @@
-Hello
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f8c3d3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        #valentineBtn {
+            background-color: #ff4d94;
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: background-color 0.3s;
+        }
+        #valentineBtn:hover {
+            background-color: #ff3366;
+        }
+        #imageContainer {
+            display: none;
+            margin-top: 20px;
+        }
+        img {
+            max-width: 300px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Will You Be My Valentine?</h1>
+
+    <button id="valentineBtn" onclick="handleResponse('yes')">Yes</button>
+    <button id="valentineBtnNo" onclick="handleResponse('no')">No</button>
+
+    <div id="imageContainer">
+        <img src="https://www.example.com/your-valentine-image.jpg" alt="Valentine's Image">
+    </div>
+
+    <script>
+        function handleResponse(response) {
+            if (response === 'yes') {
+                document.getElementById('imageContainer').style.display = 'block';
+            } else if (response === 'no') {
+                randomizeButtonPosition();
+            }
+        }
+
+        function randomizeButtonPosition() {
+            const buttons = document.querySelectorAll('button');
+            const randomX = Math.floor(Math.random() * window.innerWidth - 200);
+            const randomY = Math.floor(Math.random() * window.innerHeight - 100);
+            const buttonNo = document.getElementById('valentineBtnNo');
+
+            buttonNo.style.position = 'absolute';
+            buttonNo.style.left = randomX + 'px';
+            buttonNo.style.top = randomY + 'px';
+        }
+    </script>
+
+</body>
+</html>
