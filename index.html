@@ -13,8 +13,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
             flex-direction: column;
+            position: relative;
         }
         #valentineBtn {
             background-color: #ff4d94;
@@ -29,45 +29,157 @@
         #valentineBtn:hover {
             background-color: #ff3366;
         }
+        #valentineBtnNo {
+            background-color: #b8a4ac;
+            border: none;
+            color: white;
+            padding: 8px 16px; 
+            margin-top: 200px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 10px;
+            position: absolute;
+            transition: background-color 0.3s;
+            box-sizing: border-box;
+            height: 50px;
+        }
+        #valentineBtnNo:hover {
+            background-color: #ff3366;
+        }
         #imageContainer {
             display: none;
             margin-top: 20px;
         }
-        img {
+        .video-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Ensures the video and button align centrally */
+        }
+        video {
             max-width: 300px;
             border-radius: 10px;
+        }
+        #playButton {
+            display: block; /* Ensure the button is block level */
+            background-color: #662037;
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 10px;
+            margin-top: 20px; /* Adjust space between video and button */
+        }
+        #playButton:hover {
+            background-color: #663143;
+        }
+        #message {
+            display: none;
+            color: red;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        #secondVideoContainer {
+            display: none;
+            margin-top: 20px;
+        }
+        audio {
+            display: none;
         }
     </style>
 </head>
 <body>
 
-    <h1>Will You Be My Valentine?</h1>
+    <h1 id="questionText">Honey, gusto ka ba mahimong Valentine nako?</h1>
 
     <button id="valentineBtn" onclick="handleResponse('yes')">Yes</button>
     <button id="valentineBtnNo" onclick="handleResponse('no')">No</button>
 
     <div id="imageContainer">
-        <img src="https://www.example.com/your-valentine-image.jpg" alt="Valentine's Image">
+        <div class="video-container">
+            <!-- First Video: Plays immediately when Yes is clicked -->
+            <video id="valentineVideo" loop muted>
+                <source src="./rose.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            
+            <!-- Button to play second video -->
+            <button id="playButton" onclick="playSecondVideo()">Play Montage</button>
+        </div>
+
+        <div id="message"></div>
     </div>
+
+    <div id="secondVideoContainer">
+        <!-- Second Video: Plays when Play Video Again is clicked -->
+        <video id="secondValentineVideo" loop>
+            <source src="https://www.example.com/your-second-valentine-video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Background Music -->
+    <audio id="backgroundMusic" autoplay loop>
+        <source src="music.mp3" type="audio/mp3">
+        Your browser does not support the audio tag.
+    </audio>
 
     <script>
         function handleResponse(response) {
             if (response === 'yes') {
+                // Hide the question text, both buttons, and show the first video
+                document.getElementById('questionText').style.display = 'none';
+                document.getElementById('valentineBtn').style.display = 'none';
+                document.getElementById('valentineBtnNo').style.display = 'none';
                 document.getElementById('imageContainer').style.display = 'block';
+
+                // Get the first video element, mute it, and play it
+                const firstVideo = document.getElementById('valentineVideo');
+                firstVideo.currentTime = 0; // Reset video to the start
+                firstVideo.play(); // Play the first video
+
+                // Start background music
+                const backgroundMusic = document.getElementById('backgroundMusic');
+                backgroundMusic.play(); // Play the background music
+
+                // Always show the Play Video button for the second video
+                document.getElementById('playButton').style.display = 'inline-block';
+                document.getElementById('message').style.display = 'none';
             } else if (response === 'no') {
+                // Randomize the position of the "No" button
                 randomizeButtonPosition();
             }
         }
 
         function randomizeButtonPosition() {
-            const buttons = document.querySelectorAll('button');
-            const randomX = Math.floor(Math.random() * window.innerWidth - 200);
-            const randomY = Math.floor(Math.random() * window.innerHeight - 100);
             const buttonNo = document.getElementById('valentineBtnNo');
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            const buttonWidth = buttonNo.offsetWidth;
+            const buttonHeight = buttonNo.offsetHeight;
 
-            buttonNo.style.position = 'absolute';
+            // Make sure the button stays inside the visible viewport
+            const randomX = Math.floor(Math.random() * (windowWidth - buttonWidth));
+            const randomY = Math.floor(Math.random() * (windowHeight - buttonHeight - 50));  // 50px padding from the bottom
+
             buttonNo.style.left = randomX + 'px';
             buttonNo.style.top = randomY + 'px';
+
+            buttonNo.style.display = 'block';  // Ensure the button is visible
+        }
+
+        function playSecondVideo() {
+            if (new Date().getDate() === 14 && new Date().getMonth() === 1) {
+                // Hide the first video and show the second video
+                document.getElementById('valentineVideo').pause(); // Pause the first video
+                document.getElementById('secondVideoContainer').style.display = 'block';
+                
+                const secondVideo = document.getElementById('secondValentineVideo');
+                secondVideo.currentTime = 0; // Reset second video to start
+                secondVideo.play(); // Play the second video
+            } else {
+                document.getElementById('message').textContent = 'Come back on 14th February!';
+                document.getElementById('message').style.display = 'block';
+            }
         }
     </script>
 
