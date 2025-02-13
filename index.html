@@ -168,7 +168,7 @@
         }
 
         function playSecondVideo() {
-            if (new Date().getDate() === 13 && new Date().getMonth() === 2) {
+      if (new Date().getDate() === 13 && new Date().getMonth() === 1) { 
                 // Hide the first video and show the second video
                 document.getElementById('valentineVideo').pause(); // Pause the first video
                 document.getElementById('secondVideoContainer').style.display = 'block';
@@ -177,7 +177,7 @@
                 secondVideo.currentTime = 0; // Reset second video to start
                 secondVideo.play(); // Play the second video
             } else {
-                document.getElementById('message').textContent = 'Come back on 14th February!!!!';
+                document.getElementById('message').textContent = 'Come back on 14th February!';
                 document.getElementById('message').style.display = 'block';
             }
         }
