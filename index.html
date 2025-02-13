@@ -112,7 +112,7 @@
     <div id="secondVideoContainer">
         <!-- Second Video: Plays when Play Video Again is clicked -->
         <video id="secondValentineVideo" loop>
-            <source src="https://www.example.com/your-second-valentine-video.mp4" type="video/mp4">
+            <source src="montage.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
     </div>
@@ -168,7 +168,7 @@
         }
 
         function playSecondVideo() {
-            if (new Date().getDate() === 14 && new Date().getMonth() === 1) {
+            if (new Date().getDate() === 14 && new Date().getMonth() === 2) {
                 // Hide the first video and show the second video
                 document.getElementById('valentineVideo').pause(); // Pause the first video
                 document.getElementById('secondVideoContainer').style.display = 'block';
